@@ -12,7 +12,7 @@
     "build": "npm run clean && npm run build:root && npm run build:vault && npm run build:gallery && npm run build:comparison",
     "build:root": "react-scripts build",
     "build:vault": "npm run build --prefix ./neurovault && npx cpx \"neurovault/dist/**/*\" build/neurovault",
-    "build:gallery": "cd neuropromptgallery && npm config set registry https://registry.npmjs.org/ && npm ci && npm run build && cd .. && npx cpx \"neuropromptgallery/dist/**/*\" build/neuropromptgallery",
+    "build:gallery": "cd neuropromptgallery && npm install @vitejs/plugin-react-swc vite typescript --save-dev && npm ci --legacy-peer-deps && npm run build && cd .. && npx cpx \"neuropromptgallery/dist/**/*\" build/neuropromptgallery",
     "build:comparison": "npm run build --prefix ./neuroaicomparison && npx cpx \"neuroaicomparison/dist/**/*\" build/neuroaicomparison",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

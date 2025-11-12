@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "cross-env PORT=3002 vite --open /neuropromptgallery",
+    "preinstall": "npm config set fetch-retries 5 && npm config set fetch-retry-mintimeout 20000 && npm config set fetch-retry-maxtimeout 120000",
     "build": "vite build",
     "start": "cross-env PORT=3002 vite --host",
     "preview": "cross-env PORT=3002 vite preview"

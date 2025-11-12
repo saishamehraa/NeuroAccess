@@ -1,0 +1,117 @@
+import React, { useState } from "react";
+import { useTheme } from "../../hooks/useTheme";
+
+interface SignupFormProps {
+  onSignup: (email: string, password: string) => void;
+  switchMode: () => void;
+  isLoading: boolean;
+  onSignupSuccess?: () => void;
+  onRedirectToDashboard?: () => void;
+  error?: string | null;
+}
+
+export function SignupForm({ onSignup, switchMode, isLoading }: SignupFormProps) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = useState("");
+  const { theme } = useTheme();
+
+  const validateEmail = (value: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!value.trim()) return "Email is required";
+    if (!emailRegex.test(value.trim())) return "Please enter a valid email address";
+    return "";
+  };
+
+  const validatePassword = (value: string) => {
+    if (!value.trim()) return "Password is required";
+    if (value.trim().length < 6) return "Password must be at least 6 characters";
+    return "";
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const eErr = validateEmail(email);
+    const pErr = validatePassword(password);
+    const cErr = password === confirmPassword ? "" : "Passwords do not match";
+    setEmailError(eErr);
+    setPasswordError(pErr);
+    setConfirmPasswordError(cErr);
+
+    if (eErr || pErr || cErr) return;
+
+    // Delegate signup to parent (AuthContainer will use Supabase)
+    onSignup(email.trim(), password.trim());
+  };
+
+  return (
+    <div className="w-full max-w-md mx-auto transition-colors duration-300">
+      <div className="text-center mb-12 pb-3">
+        <h1
+          className="text-5xl font-bold text-transparent bg-clip-text leading-relaxed transition-all duration-300"
+          style={{
+            backgroundImage: theme === "dark" ? "linear-gradient(to right, #10b981, #06b6d4, #3b82f6)" : "linear-gradient(to right, #059669, #0891b2, #2563eb)",
+          }}
+        >
+          Sign Up
+        </h1>
+      </div>
+
+      <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+        <div>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+            className="w-full text-lg pb-3 px-3 rounded-md border-2 bg-transparent"
+            required
+          />
+          {emailError && <p className="mt-1 text-sm text-red-600">{emailError}</p>}
+        </div>
+
+        <div>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password (min 6 chars)"
+            className="w-full text-lg pb-3 px-3 rounded-md border-2 bg-transparent"
+            required
+          />
+          {passwordError && <p className="mt-1 text-sm text-red-600">{passwordError}</p>}
+        </div>
+
+        <div>
+          <input
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            placeholder="Confirm Password"
+            className="w-full text-lg pb-3 px-3 rounded-md border-2 bg-transparent"
+            required
+          />
+          {confirmPasswordError && <p className="mt-1 text-sm text-red-600">{confirmPasswordError}</p>}
+        </div>
+
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="w-full text-white text-lg font-semibold py-4 rounded-full bg-gradient-to-r from-blue-600 to-indigo-700"
+        >
+          {isLoading ? "Creating account..." : "Sign Up"}
+        </button>
+
+        <div className="text-center mt-6">
+          <span className="text-gray-700 dark:text-gray-300">Already have an account? </span>
+          <button type="button" onClick={switchMode} disabled={isLoading} className="text-blue-700">
+            Login
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+}

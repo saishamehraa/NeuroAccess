@@ -1,0 +1,72 @@
+{
+  "name": "neuroaccess",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "homepage": "/",
+  "type": "module",
+  "scripts": {
+    "dev": "cross-env PORT=3000 react-scripts start",
+    "start": "cross-env PORT=3000 react-scripts start",
+    "clean": "npx rimraf build",
+    "build": "npm run clean && npm run build:root && npm run build:vault && npm run build:gallery && npm run build:comparison",
+    "build:root": "react-scripts build",
+    "build:vault": "npm run build --prefix ./neurovault && npx cpx \"neurovault/dist/**/*\" build/neurovault",
+    "build:gallery": "npm run build --prefix ./neuropromptgallery && npx cpx \"neuropromptgallery/dist/**/*\" build/neuropromptgallery",
+    "build:comparison": "npm run build --prefix ./neuroaicomparison && npx cpx \"neuroaicomparison/dist/**/*\" build/neuroaicomparison",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "start:all": "concurrently \"npm start\" \"npm run start --prefix ./neurovault\" \"npm run start --prefix ./neuropromptgallery\" \"npm run start --prefix ./neuroaicomparison\""
+  },
+  "dependencies": {
+    "@highlight-run/react": "^21.0.0",
+    "@radix-ui/react-accordion": "^1.2.3",
+    "@supabase/supabase-js": "^2.56.1",
+    "@tailwindcss/vite": "4.1.12",
+    "@vitejs/plugin-react": "^5.0.1",
+    "axios": "^1.11.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "firebase": "^12.1.0",
+    "highlight.run": "^9.20.0",
+    "http-proxy-middleware": "^3.0.5",
+    "lucide-react": "^0.487.0",
+    "mammoth": "^1.10.0",
+    "morgan": "^1.10.1",
+    "multer": "^2.0.2",
+    "node-fetch": "^3.3.2",
+    "pdf-parse": "^1.1.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "7.8.2",
+    "react-scripts": "^5.0.1",
+    "recharts": "^3.3.0",
+    "tailwindcss": "^4.1.12",
+    "typescript": "^4.9.5",
+    "zod": "^4.1.5"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^4.17.23",
+    "@types/morgan": "^1.9.10",
+    "@types/react": "^19.1.11",
+    "@types/react-dom": "^19.1.8",
+    "concurrently": "^9.2.1",
+    "cpx": "^1.5.0",
+    "cross-env": "^10.0.0",
+    "rimraf": "^6.0.1"
+  }
+}

@@ -1,0 +1,4 @@
+supabaseClient.js
+supabaseClient.ts
+.env
+.env.local

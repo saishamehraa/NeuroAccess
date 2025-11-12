@@ -1,0 +1,94 @@
+@import "tailwindcss";
+
+/* ---------------- Base Styles ---------------- */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background 0.5s ease, color 0.5s ease;
+
+  /* --- USE YOUR VARIABLE HERE --- */
+  background: var(--bg-gradient-light);
+  
+  /* --- ADD THIS TO PREVENT SCROLL ISSUES --- */
+  min-height: 100vh;
+}
+
+/* --- ADD THIS NEW RULE --- */
+html.dark body {
+  background: var(--bg-gradient-dark);
+
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+/* ---------------- Theme Backgrounds ---------------- */
+:root {
+  /*--bg-gradient-light: linear-gradient(135deg, #e0b0ff 50%, #5b21b6 50%);
+  --bg-gradient-dark: linear-gradient(135deg, #1a1a1a 50%, #5b21b6 50%);*/
+  --bg-gradient-light: radial-gradient(ellipse 80% 70% at 100% 100%, #a855f7, #e0b0ff 70%);
+  --bg-gradient-dark: radial-gradient(ellipse 80% 70% at 100% 100%, #5b21b6 -10%, #1a1a1a 70%);
+  --text-gradient-light: linear-gradient(90deg, #7c3aed, #ec4899, #3b82f6);
+  --text-gradient-dark: linear-gradient(90deg, #c084fc, #f472b6, #60a5fa);
+}
+
+/* Dashboard main background */
+.dashboard-bg {
+  background: var(--bg-gradient-light);
+  min-height: 100vh;
+  transition: background 0.5s ease;
+}
+.dark .dashboard-bg {
+  background: var(--bg-gradient-dark);
+}
+
+/* ---------------- Text Gradients ---------------- */
+.text-gradient {
+  background: var(--text-gradient-light);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: background 0.5s ease;
+}
+.dark .text-gradient {
+  background: var(--text-gradient-dark);
+}
+
+/* ---------------- Autofill Fix ---------------- */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+  background: transparent !important;
+  transition: background-color 9999s ease-in-out 0s !important;
+}
+
+/* Light mode autofill text color */
+:root input:-webkit-autofill,
+:root textarea:-webkit-autofill,
+:root select:-webkit-autofill {
+  -webkit-text-fill-color: #111827 !important; /* Tailwind gray-900 */
+}
+
+/* Dark mode autofill text color */
+.dark input:-webkit-autofill,
+.dark textarea:-webkit-autofill,
+.dark select:-webkit-autofill {
+  -webkit-text-fill-color: #ffffff !important; /* White */
+}
+
+/* Firefox & Safari fix */
+input, textarea, select {
+  background-color: transparent !important;
+}

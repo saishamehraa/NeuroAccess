@@ -1,0 +1,5 @@
+node_modules
+.env
+.env.local
+supabaseClient.js
+supabaseClient.ts

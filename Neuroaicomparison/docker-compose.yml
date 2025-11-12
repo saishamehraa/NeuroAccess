@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  neuroaicomparison:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3003:3003'
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+
+  # Development version with hot reload
+  neuroaicomparison_dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - '3003:3003'
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    command: npm run dev

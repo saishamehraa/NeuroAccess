@@ -1,0 +1,222 @@
+/* Fullscreen background container - make transparent so the video shows through */
+.welcome-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: transparent; /* video will be visible behind this container */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* New global font for the welcome page (user requested different font-family) */
+body, .welcome-container {
+  font-family: 'Inter', 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Main card */
+.welcome-card {
+  max-width: 900px;
+  width: 100%;
+  /* make the card translucent so the video is visible through it */
+  background-color: rgba(255, 255, 255, 0.14);
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+  padding: 60px 40px;
+  text-align: center;
+  backdrop-filter: blur(8px) saturate(120%);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+/* Hide the original card layout as requested */
+.welcome-card { display: none !important; }
+
+/* Header */
+.welcome-header {
+  margin-bottom: 40px;
+}
+
+.welcome-logo {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+  background: linear-gradient(135deg, rgba(139,92,246,0.9), rgba(59,130,246,0.9));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
+}
+
+/* small variant for top-left placement */
+.welcome-logo.small {
+  width: 36px;
+  height: 36px;
+  font-size: 18px;
+  margin: 0;
+}
+
+.welcome-title {
+  font-size: 48px;
+  font-weight: 700;
+  margin: 0 0 10px;
+  color: rgba(255,255,255,0.92);
+  text-shadow: 0 2px 8px rgba(0,0,0,0.35);
+}
+
+/* Top-left brand (small title/logo) */
+.top-left-brand {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 20;
+}
+
+.brand-text {
+  font-size: 14px; /* smaller font per request */
+  font-weight: 600;
+  color: rgba(255,255,255,0.95);
+}
+
+.welcome-subtitle {
+  font-size: 20px;
+  color: rgba(255,255,255,0.85);
+  margin: 0;
+  font-weight: 400;
+}
+/*
+/* Description text 
+.welcome-intro {
+  font-size: 18px;
+  color: #374151;
+  line-height: 1.7;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* Feature grid 
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+/* Feature card base 
+.feature-card {
+  padding: 30px 25px;
+  border-radius: 16px;
+  transition: transform 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Specific colors 
+.feature-purple {
+  background-color: rgba(139, 92, 246, 0.1);
+  border-color: rgba(139, 92, 246, 0.2);
+}
+
+.feature-blue {
+  background-color: rgba(59, 130, 246, 0.1);
+  border-color: rgba(59, 130, 246, 0.2);
+}
+
+.feature-green {
+  background-color: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.2);
+}
+
+/* Card content 
+.feature-icon {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 15px;
+  border-radius: 12px;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text-purple { color: #8b5cf6; }
+.text-blue { color: #3b82f6; }
+.text-green { color: #10b981; }
+
+.feature-title {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0 0 10px;
+}
+
+.feature-description {
+  color: #111827;
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0;
+}
+*/
+
+/* CTA Button */
+.cta-container {
+  margin-top: 50px;
+}
+
+.cta-button {
+  background: linear-gradient(135deg, rgba(139,92,246,0.95), rgba(59,130,246,0.95));
+  color: white;
+  border: none;
+  padding: 18px 40px;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  transition: all 0.3s ease;
+}
+
+/* Bottom centered CTA */
+.bottom-cta {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 30px;
+  z-index: 20;
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 40px rgba(139, 92, 246, 0.5);
+}
+
+.cta-note {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #111727;
+  opacity: 0.8;
+}
+
+/* Ensure welcome content is above the fullscreen background video */
+.welcome-container {
+  position: relative;
+  z-index: 10; /* above the video which uses z-index: -1 */
+}
+
+.welcome-card {
+  position: relative;
+  z-index: 11;
+}
+
+/* Make sure buttons and form controls are interactable */
+.welcome-card button,
+.welcome-card a {
+  position: relative;
+  z-index: 12;
+}

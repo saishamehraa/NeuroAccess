@@ -1,0 +1,21 @@
+# Ignore node dependencies and caches
+node_modules
+**/node_modules
+npm-debug.log
+yarn.lock
+pnpm-lock.yaml
+
+# Ignore builds and outputs
+build
+dist
+out
+coverage
+
+# Ignore Git and IDE metadata
+.git
+.gitignore
+.vscode
+.DS_Store
+*.zip
+*.log
+.env

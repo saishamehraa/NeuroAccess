@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
   assetPrefix: '/neuroaicomparison',
   // Use export/build dir only for production builds
   output: 'export', 
+  unoptimized: true,
   distDir: '../build/neuroaicomparison',
 
   // Skip linting during build for production (warnings only)

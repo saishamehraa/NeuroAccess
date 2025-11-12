@@ -13,9 +13,11 @@
     "build:root": "react-scripts build",
     "build:vault": "cd neurovault && npm ci --legacy-peer-deps && npm run build && cd .. && npx cpx \"neurovault/dist/**/*\" build/neurovault",
     "build:gallery": "cd neuropromptgallery && npm ci --legacy-peer-deps && npm run build && cd .. && npx cpx \"neuropromptgallery/dist/**/*\" build/neuropromptgallery",
-    "build:comparison": "cd neuroaicomparison && npm ci --legacy-peer-deps && npm run build && cd .. && npx cpx \"neuroaicomparison/out/**/*\" build/neuroaicomparison",    "test": "react-scripts test",
+    "build:comparison": "cd neuroaicomparison && npm ci --legacy-peer-deps && npm run build && cd .. && npx cpx \"neuroaicomparison/out/**/*\" build/neuroaicomparison",
+    "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start:all": "concurrently \"npm start\" \"npm run start --prefix ./neurovault\" \"npm run start --prefix ./neuropromptgallery\" \"npm run start --prefix ./neuroaicomparison\""
+    "start:all": "concurrently \"npm start\" \"npm run start --prefix ./neurovault\" \"npm run start --prefix ./neuropromptgallery\" \"npm run start --prefix ./neuroaicomparison\"",
+    "postinstall": "node ./scripts/fix-pdf-parse.js"
   },
   "dependencies": {
     "@highlight-run/react": "^21.0.0",

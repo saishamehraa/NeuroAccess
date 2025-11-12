@@ -27,7 +27,8 @@
     "prod:status": "./scripts/production-deploy.sh status",
     "prod:logs": "./scripts/production-deploy.sh logs",
     "prod:rollback": "./scripts/production-deploy.sh rollback",
-    "prod:test": "./scripts/production-deploy.sh test"
+    "prod:test": "./scripts/production-deploy.sh test",
+    "postinstall": "node ./scripts/fix-pdf-parse.js"
   },
   "dependencies": {
     "@radix-ui/react-select": "^2.2.6",

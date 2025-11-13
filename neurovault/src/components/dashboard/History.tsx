@@ -221,15 +221,38 @@ export function History({ onSwitchToChat }: HistoryProps) {
         </div>
       )}
 
-      <div className="text-center">
+      {/*<div className="text-center">
         <h2 className="text-4xl font-bold mb-2 text-gradient inline-block">Chat History</h2>
         <p className={`text-lg ${theme === 'dark' ? 'text-purple-300' : 'text-purple-700'}`}>Review and manage your previous conversations</p>
+      </div>
+*/}
+      <div className="text-center mb-8">
+        <h2 className={`text-5xl font-extrabold mb-4 inline-block pb-2 tracking-tight drop-shadow-lg bg-clip-text text-transparent ${
+         theme === 'dark' 
+          ? 'bg-gradient-to-r from-white via-purple-200 to-blue-400' 
+           : 'bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500'
+          }`}>
+          Chat History
+        </h2>
+        <p className={`text-lg font-medium ${theme === 'dark' ? 'text-purple-200/70' : 'text-purple-700'}`}>
+          Review and manage your previous conversations
+        </p>
       </div>
 
       <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
         <div className="relative flex-1 max-w-md">
           <Search className={`absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 ${theme === 'dark' ? 'text-purple-400' : 'text-purple-600'}`} />
-          <input value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} placeholder="Search conversations..." className="w-full pl-10 pr-4 py-3 rounded-xl border-2" />
+        {/*  <input value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} placeholder="Search conversations..." className="w-full pl-10 pr-4 py-3 rounded-xl border-2" /> */}
+        <input 
+         value={searchTerm} 
+         onChange={(e) => setSearchTerm(e.target.value)} 
+         placeholder="Search conversations..." 
+         className={`w-full pl-10 pr-4 py-3 rounded-xl border-2 outline-none transition-all ${
+         theme === 'dark' 
+         ? 'bg-black/20 border-gray-700 text-white placeholder-gray-400 focus:border-purple-500' 
+         : 'bg-white/50 border-gray-200 text-gray-900 placeholder-gray-500 focus:border-purple-500'
+        }`} 
+        />
         </div>
 
         <div className="flex flex-wrap gap-2">
@@ -249,7 +272,13 @@ export function History({ onSwitchToChat }: HistoryProps) {
                     {promptId && (
                       <a href={`${APP_URLS.promptgallery}?id=${encodeURIComponent(promptId)}`} className="ml-2 px-2 py-1 text-xs rounded-full bg-yellow-100 text-yellow-800">Prompt: {promptId}</a>
                     )}
-                    <span className="px-3 py-1 rounded-full text-xs font-medium text-gradient">{session.model}</span>
+                    <span className={`px-3 py-1 rounded-full text-xs font-medium border ${
+  theme === 'dark' 
+    ? 'bg-purple-500/20 border-purple-500/30 text-purple-100' 
+    : 'bg-purple-100 border-purple-200 text-purple-700'
+}`}>
+  {session.model}
+</span>
                     {session.isActive && (<span className="px-2 py-1 bg-blue-500/20 text-blue-400 rounded-full text-xs font-medium">Current</span>)}
                   </div>
 

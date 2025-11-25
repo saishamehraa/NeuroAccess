@@ -1,8 +1,28 @@
 import fs from "fs";
-const file = "node_modules/pdf-parse/package.json";
-const pkg = JSON.parse(fs.readFileSync(file, "utf8"));
-if (pkg.exports?.["."]?.default === "./index.js") {
-  pkg.exports["."].default = "./lib/pdf-parse.js";
-  fs.writeFileSync(file, JSON.stringify(pkg, null, 2));
-  console.log("✅ Patched pdf-parse default export to use lib/pdf-parse.js");
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+try {
+  // Target the real file that contains the crashing debug code
+  const filePath = path.join(
+    __dirname,
+    "..",
+    "node_modules",
+    "pdf-parse",
+    "index.js"
+  );
+
+  let content = fs.readFileSync(filePath, "utf8");
+
+  // Remove the entire debug/testing block
+  content = content.replace(/let isDebugMode[\s\S]*?\*\//, "");
+
+  fs.writeFileSync(filePath, content, "utf8");
+
+  console.log("✅ Successfully removed pdf-parse debug block.");
+} catch (err) {
+  console.error("❌ Failed to patch pdf-parse:", err.message);
 }

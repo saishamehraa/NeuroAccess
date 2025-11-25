@@ -1,27 +1,20 @@
-# ---------------- BUILD STAGE ----------------
+# ---------------- BUILD ----------------
 FROM node:20 AS builder
 WORKDIR /app
 
-# Copy everything
 COPY . .
 
-# Install root deps
+# Install deps
 RUN npm install --legacy-peer-deps
+RUN cd neurovault && npm install --legacy-peer-deps
+RUN cd neuropromptgallery && npm install --legacy-peer-deps
+RUN cd neuroaicomparison && npm install --legacy-peer-deps
 
-# Remove pdf-parse test block at root
-RUN sed -i "/for testing purpose/,/}\)/d" node_modules/pdf-parse/index.js || true
+# Apply patch
+COPY patches ./patches
+RUN npm install patch-package --legacy-peer-deps && npx patch-package
 
-# Install subproject deps and patch each
-RUN cd neurovault && npm install --legacy-peer-deps && \
-    sed -i "/for testing purpose/,/}\)/d" ../node_modules/pdf-parse/index.js || true
-
-RUN cd neuropromptgallery && npm install --legacy-peer-deps && \
-    sed -i "/for testing purpose/,/}\)/d" ../node_modules/pdf-parse/index.js || true
-
-RUN cd neuroaicomparison && npm install --legacy-peer-deps && \
-    sed -i "/for testing purpose/,/}\)/d" ../node_modules/pdf-parse/index.js || true
-
-# Build all apps
+# Build
 RUN npm run build
 
 # ---------------- RUNTIME ----------------

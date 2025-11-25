@@ -1,28 +1,12 @@
 import fs from "fs";
 import path from "path";
-import { fileURLToPath } from "url";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const src = path.join("scripts/pdf-parse-override/index.js");
+const dest = path.join("node_modules/pdf-parse/index.js");
 
 try {
-  // Target the real file that contains the crashing debug code
-  const filePath = path.join(
-    __dirname,
-    "..",
-    "node_modules",
-    "pdf-parse",
-    "index.js"
-  );
-
-  let content = fs.readFileSync(filePath, "utf8");
-
-  // Remove the entire debug/testing block
-  content = content.replace(/let isDebugMode[\s\S]*?\*\//, "");
-
-  fs.writeFileSync(filePath, content, "utf8");
-
-  console.log("✅ Successfully removed pdf-parse debug block.");
+  fs.copyFileSync(src, dest);
+  console.log("✅ pdf-parse index.js overridden successfully");
 } catch (err) {
-  console.error("❌ Failed to patch pdf-parse:", err.message);
+  console.error("❌ Failed to override pdf-parse:", err);
 }

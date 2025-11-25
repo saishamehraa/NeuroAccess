@@ -13,6 +13,9 @@ RUN cd neurovault && npm install --legacy-peer-deps
 RUN cd neuropromptgallery && npm install --legacy-peer-deps
 RUN cd neuroaicomparison && npm install --legacy-peer-deps
 
+# 🩹 FIX pdf-parse broken test import
+RUN sed -i "s/require('.\/test\/data\/05-versions-space.pdf');//g" node_modules/pdf-parse/index.js || true
+
 # Build all apps (root + vite + next)
 RUN npm run build
 

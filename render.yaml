@@ -1,39 +1,41 @@
 services:
   - name: neuroaccess
     type: web
-    runtime: docker        # ← REQUIRED in new schema
+    runtime: docker
     repo: https://github.com/saishamehraa/NeuroAccess
     plan: free
     region: singapore
-
     dockerfilePath: ./Dockerfile
+    healthCheckPath: /
+    autoDeploy: true
 
     envVars:
       - key: PORT
         value: 3000
-
+      
       - key: NEXT_PUBLIC_SUPABASE_URL
         sync: false
+
       - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
         sync: false
 
       - key: OPEN_PROVIDER_API_KEY
         sync: false
+
       - key: OPEN_PROVIDER_API_KEY_BACKUP
         sync: false
 
       - key: GEMINI_API_KEY
         sync: false
+
       - key: MISTRAL_API_KEY
         sync: false
+
       - key: OPENROUTER_API_KEY
         sync: false
+
       - key: INFERENCE_API_KEY
         sync: false
 
       - key: GITHUB_TOKEN
         sync: false
-
-    healthCheckPath: /
-    autoDeploy: true
-    startCommand: "node server.js"

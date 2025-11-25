@@ -30,8 +30,5 @@ COPY --from=builder /app/build ./build
 # Copy node_modules (backend deps)
 COPY --from=builder /app/node_modules ./node_modules
 
-# Copy env if any
-COPY .env ./.env
-
 EXPOSE 3000
 CMD ["node", "server.js"]

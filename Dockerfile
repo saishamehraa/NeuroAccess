@@ -1,26 +1,37 @@
-FROM node:20-alpine AS builder
+# ---------------- BUILD STAGE ----------------
+FROM node:20 AS builder
 WORKDIR /app
 
 # Copy everything
 COPY . .
 
-# Install root deps (use install, not ci)
+# Install dependencies for root
 RUN npm install --legacy-peer-deps
 
-# Install deps for each subproject
+# Install for each subproject
 RUN cd neurovault && npm install --legacy-peer-deps
 RUN cd neuropromptgallery && npm install --legacy-peer-deps
 RUN cd neuroaicomparison && npm install --legacy-peer-deps
 
-# Build everything
+# Build all apps (root + vite + next)
 RUN npm run build
 
-# -------- Production --------
-FROM node:20-alpine
+# ---------------- RUNTIME STAGE ----------------
+FROM node:20
+
 WORKDIR /app
 
-COPY --from=builder /app/build ./build
+# Copy server
 COPY server.js .
+
+# Copy build output (React + Vite + Next)
+COPY --from=builder /app/build ./build
+
+# Copy node_modules (backend deps)
+COPY --from=builder /app/node_modules ./node_modules
+
+# Copy env if any
+COPY .env ./.env
 
 EXPOSE 3000
 CMD ["node", "server.js"]

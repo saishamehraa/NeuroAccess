@@ -14,7 +14,7 @@ export const AIAssistant: React.FC<{ selectedModel?: string }> = () => {
     // left-0: Full width on mobile
     // md:left-64: Starts after the sidebar on desktop (medium screens and up)
     // z-50: Overlays everything including header
-    <div className="fixed top-0 left-0 md:left-64 right-0 bottom-0 z-50 bg-black">
+    <div className="fixed top-0 left-0 md:left-64 right-0 bottom-0 z-10 bg-black">
       
       {/* The <picture> element allows for "Art Direction" switching images based on width */}
       <picture>

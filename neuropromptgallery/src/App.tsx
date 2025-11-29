@@ -318,7 +318,7 @@ const toggleSave = async (id: string | number) => {
 
         <div className="relative z-10">
           {/* Back button (top-left) to return to NeuroVault */}
-          <div className="absolute top-4 left-4 z-50">
+         {/* <div className="absolute top-4 left-4 z-50">
             <button
               onClick={() => { window.location.href = APP_URLS.neurovault }}
               className="px-3 py-2 rounded-md bg-white/10 hover:bg-white/20 text-white text-sm"
@@ -326,7 +326,17 @@ const toggleSave = async (id: string | number) => {
             >
               ← Back
             </button>
-          </div>
+          </div> */}
+          {/* Floating back button — always visible */}
+            <div className="fixed top-4 left-4 z-[300]">
+              <button
+                onClick={() => { window.location.href = APP_URLS.neurovault }}
+                className="px-3 py-2 rounded-md bg-white/10 hover:bg-white/20 text-white text-sm backdrop-blur-md shadow-lg"
+                aria-label="Back to NeuroVault"
+              >
+                ← Back
+              </button>
+            </div>
           <div className="container mx-auto px-4 py-8">
             {/* Header */}
             <div className="text-center mb-8">

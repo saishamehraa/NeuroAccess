@@ -10,7 +10,7 @@ import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognitio
 import Image from 'next/image'
 
 interface Props {
-  onSubmit?: (text: string, fileDataUrl?: string) => void; // <-- include file
+  onSubmit?: (text: string, fileDataUrl?: string, fileName?: string | null, fileSize?: number | null) => void;
   isDark?: boolean
   modelSelectorLabel?: string
   onOpenModelSelector?: () => void
@@ -135,7 +135,7 @@ export default function HomeAiInput({
     });
   }
 
-  onSubmit?.(text, dataUrl);  // <--- Pass both text AND file data
+  onSubmit?.(text, dataUrl, attachedFile?.name || null, attachedFile?.size || null);
   setValue('');
   clearAttachment();
   onClear?.();

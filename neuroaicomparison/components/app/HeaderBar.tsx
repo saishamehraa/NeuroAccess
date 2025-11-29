@@ -31,20 +31,6 @@ export default function HeaderBar({
   hideHomeButton = false,
 }: Props) {
   return (
-    <>
-    {/* Floating Back Button — always visible on mobile */}
-      <a
-        href={`${APP_URLS.neurovault}dashboard/`}
-        className="
-          fixed top-4 left-4 z-[200]
-          h-10 w-10 flex items-center justify-center
-          rounded-full bg-black/70 backdrop-blur-md 
-          border border-white/20 text-white shadow-xl
-        "
-        aria-label="Back to Dashboard"
-      >
-        <ArrowLeft size={20} />
-      </a>
     <div className={['flex items-center mb-3 gap-2 w-full', className || ''].join(' ')}>
       {/* Left: menu + optional Compare button */}
       <div className="flex items-center gap-2 min-w-0">
@@ -116,6 +102,5 @@ export default function HeaderBar({
         <GithubStar owner={githubOwner} repo={githubRepo} />
       </div>
     </div>
-    </>
   );
 }

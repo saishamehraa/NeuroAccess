@@ -38,7 +38,7 @@ export const ChatInterface = forwardRef<ChatInterfaceRef, {
   isDark: boolean;
   modelSelectorLabel?: string;
   onOpenModelSelector?: () => void;
-  onSubmit: (text: string, fileDataUrl?: string) => void;
+  onSubmit: (text: string, fileDataUrl?: string, fileName?: string | null, fileSize?: number | null) => void;
   initialValue: string;
   onClear: () => void;
   onEditMessage: (messageId: string, content: string) => void;

@@ -16,7 +16,7 @@ import { fetchThreads, createThread as createThreadDb, addMessage as addMessageD
 import { createChatActions } from '@/lib/chatActions'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { Menu, Layers } from 'lucide-react'
+import { Menu, Layers, ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 import GithubStar from '@/components/app/GithubStar'
 import ThemeToggle from '@/components/ThemeToggle'
@@ -36,6 +36,7 @@ import { safeUUID } from "@/lib/uuid";
 import { useSearchParams } from 'next/navigation';
 import { MODEL_CATALOG } from "@/lib/models";
 import { toast } from 'react-toastify';
+import { APP_URLS } from "@/utils/urls";
 
 
 
@@ -127,10 +128,10 @@ const [recentModelIds, setRecentModelIds] = useLocalStorage<string[]>('neuroaico
 
   const newModel = makeCustomModel(newLabel || "New Model", modelIdFromUrl);
 
-  // 1. Add it to custom models
+  // Add it to custom models
   setCustomModels(prev => [...prev, newModel]);
 
-  // 2. Add it to recents
+  // Add it to recents
   updateRecents();
 
   toast.success(`New model "${newLabel}" was added to Recents!`);
@@ -256,7 +257,7 @@ const [recentModelIds, setRecentModelIds] = useLocalStorage<string[]>('neuroaico
 
   // Replace the entire handleSubmit function in page.tsx with this one
 
-const handleSubmit = async (text: string, fileDataUrl?: string) => {
+const handleSubmit = async (text: string, fileDataUrl?: string, fileName?: string | null, fileSize?: number | null) => {
   const content = text.trim();
   if (!content && !fileDataUrl) {
     chatRef.current?.setLoading(false);
@@ -325,7 +326,9 @@ const handleSubmit = async (text: string, fileDataUrl?: string) => {
           role: 'user', 
           content: content, 
           ts: Date.now(),
-          file: fileDataUrl, // Also save the file with the user message
+          file: fileDataUrl || null,
+          fileName: fileName || null,
+          fileSize: fileSize ? String(fileSize) : null,
           response: '', // Satisfy the ChatMessage type
         };
         try {
@@ -609,6 +612,20 @@ if (/openai|\bgpt\b|^gpt-|\bo3\b|\bo4\b/.test(txt)) {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
               </button>
+              {/* Mobile Back Button */}
+                <a
+                  href={`${APP_URLS.neurovault}dashboard/`}
+                  className="
+                    inline-flex lg:hidden items-center justify-center 
+                    h-9 w-9 rounded-xl bg-black/50 backdrop-blur-md
+                    border border-white/15 text-white shadow-lg
+                  "
+                  aria-label="Back to Dashboard"
+                  title="Back to Dashboard"
+                >
+                  <ArrowLeft size={18} />
+                </a>
+
               {/* Right: Compare (small) + Actions trigger (mobile) */}
               <div className="relative flex items-center gap-2">
                 <Link

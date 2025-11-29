@@ -214,22 +214,25 @@ export default function Dashboard({ session }: DashboardProps) {
   };
 
   return (
-    <div className={`min-h-screen flex dashboard-bg ${theme}`}>
+    <div className={`relative min-h-screen flex dashboard-bg ${theme}`}>
     {/* Floating toggle button for mobile */}
       <button
-       onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
-       className="
-        md:hidden fixed top-1/2 left-2 z-50 
-        p-2 rounded-full bg-black/60 backdrop-blur-lg 
-        border border-white/20 text-white shadow-lg 
-       transform -translate-y-1/2 transition-all duration-300
-       "
-       >
-       {mobileSidebarOpen ? "‹" : "›"}
+        onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
+        className="
+          md:hidden fixed top-1/2 left-0 z-[100] 
+          -translate-y-1/2
+          bg-black/70 backdrop-blur-md 
+          text-white border border-white/20 
+          h-10 w-6 flex items-center justify-center
+          rounded-r-xl shadow-lg
+        "
+      >
+        {mobileSidebarOpen ? "‹" : "›"}
       </button>
 
+
       <aside className={`
-       fixed top-0 left-0 h-full w-64 z-40 
+       fixed inset-y-0 left-0 w-64 z-40
        transform transition-transform duration-300
        ${mobileSidebarOpen ? "translate-x-0" : "-translate-x-full"}
        md:static md:translate-x-0
@@ -329,12 +332,13 @@ export default function Dashboard({ session }: DashboardProps) {
       </aside> 
       {mobileSidebarOpen && (
       <div
-      className="md:hidden fixed inset-0 bg-black/50 z-30"
-      onClick={() => setMobileSidebarOpen(false)}
-       />
+        className="md:hidden fixed inset-0 bg-black/50 z-30"
+        style={{ touchAction: "none" }}
+        onClick={() => setMobileSidebarOpen(false)}
+      ></div>
         )}
 
-      <main className="flex-1 flex flex-col">
+      <main className="flex-1 flex flex-col overflow-x-hidden">
         <header className={`flex justify-between items-center p-6 border-b backdrop-blur-sm transition-colors duration-300 ${
           theme === "dark"
             ? "border-gray-700/30 bg-gray-900/20"

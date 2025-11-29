@@ -32,9 +32,9 @@ type Section =
 
 export default function Dashboard({ session }: DashboardProps) {
   const [activeSection, setActiveSection] = useState<Section>("chat");
-  const [selectedModel] = useState(
-    "google/gemma-3n-e4b-it:free"
-  );
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const [selectedModel, setSelectedModel] = useState<string | null>(null);
+
   const { theme } = useTheme();
   //const { updateCurrentSessionMessages } = useChatHistory();
   const {} = useChatHistory();
@@ -54,10 +54,11 @@ export default function Dashboard({ session }: DashboardProps) {
   };
 
   const handleModelSelect = (modelId: string) => {
-    // Redirect to NeuroAIComparison and pass the selected model via query string
-    const target = `${APP_URLS.aicomparison}?model=${encodeURIComponent(modelId)}`;
+    setSelectedModel(modelId); // store model locally in NeuroVault sidebar
+     const target = `${APP_URLS.aicomparison}?model=${encodeURIComponent(modelId)}`;
     window.location.href = target;
-  };
+    };
+
 
   /*const handleLoadSessionFromHistory = (messages: ChatMessage[]) => {
     updateCurrentSessionMessages(messages);
@@ -190,7 +191,7 @@ export default function Dashboard({ session }: DashboardProps) {
         );
      default:
         // Render the AIAssistant component as the default welcome page
-        return <AIAssistant selectedModel={selectedModel} />;
+        return <AIAssistant selectedModel={selectedModel ?? undefined} />;
     }
   };
 
@@ -214,11 +215,31 @@ export default function Dashboard({ session }: DashboardProps) {
 
   return (
     <div className={`min-h-screen flex dashboard-bg ${theme}`}>
-      <aside className={`w-64 p-6 flex flex-col gap-4 backdrop-blur-lg transition-colors duration-300 ${
-        theme === "dark"
-          ? "bg-black/20 border-r border-gray-700/30"
-          : "bg-white/20 border-r border-gray-300/30"
-      }`}>
+    {/* Floating toggle button for mobile */}
+      <button
+       onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
+       className="
+        md:hidden fixed top-1/2 left-2 z-50 
+        p-2 rounded-full bg-black/60 backdrop-blur-lg 
+        border border-white/20 text-white shadow-lg 
+       transform -translate-y-1/2 transition-all duration-300
+       "
+       >
+       {mobileSidebarOpen ? "‹" : "›"}
+      </button>
+
+      <aside className={`
+       fixed top-0 left-0 h-full w-64 z-40 
+       transform transition-transform duration-300
+       ${mobileSidebarOpen ? "translate-x-0" : "-translate-x-full"}
+       md:static md:translate-x-0
+       p-6 flex flex-col gap-4 backdrop-blur-lg
+        ${theme === "dark"
+         ? "bg-black/20 border-r border-gray-700/30"
+         : "bg-white/20 border-r border-gray-300/30"
+        }
+       `}
+        >
         <div className="mb-8 flex items-center gap-3">
           <div className={`p-2 rounded-lg transition-colors duration-300 ${
             theme === "dark" ? "bg-purple-500/20" : "bg-purple-500/10"
@@ -287,8 +308,9 @@ export default function Dashboard({ session }: DashboardProps) {
               {session.email}
             </p>
             <p className={`text-xs mt-1 ${theme === "dark" ? "text-gray-400" : "text-gray-500"}`}>
-              Model: {selectedModel}
+               Model: {selectedModel || "Not selected"}
             </p>
+
           </div>
           <button
             onClick={handleLogout}
@@ -304,7 +326,14 @@ export default function Dashboard({ session }: DashboardProps) {
             </div>
           </button>
         </div>
-      </aside>
+      </aside> 
+      {mobileSidebarOpen && (
+      <div
+      className="md:hidden fixed inset-0 bg-black/50 z-30"
+      onClick={() => setMobileSidebarOpen(false)}
+       />
+        )}
+
       <main className="flex-1 flex flex-col">
         <header className={`flex justify-between items-center p-6 border-b backdrop-blur-sm transition-colors duration-300 ${
           theme === "dark"
